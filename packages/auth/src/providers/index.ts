@@ -1,1 +1,1 @@
-// AuthProvider — Phase 3 で実装
+export { AuthProvider } from "./AuthProvider";

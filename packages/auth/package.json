@@ -1,7 +1,7 @@
 {
   "name": "@eni/auth",
   "version": "0.0.0",
-  "description": "Authentication hooks and providers — EniTrance (anitrance) integration",
+  "description": "Authentication hooks and providers — EniTrance (Firebase Auth) integration",
   "exports": {
     ".": "./src/index.ts",
     "./hooks": "./src/hooks/index.ts",
@@ -17,6 +17,9 @@
   },
   "devDependencies": {
     "@eni/config": "workspace:*",
+    "@types/react": "^19.0.0",
+    "firebase": "^11.0.0",
+    "react": "^19.0.0",
     "typescript": "^5.7.2"
   },
   "peerDependencies": {
