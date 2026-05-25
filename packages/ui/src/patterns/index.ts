@@ -1,3 +1,2 @@
-// L5 patterns — Phase 4 で実装
-// LoginForm, TenantSwitcher, PermissionEditor, DataTable, ...
-export {};
+export { LoginForm } from "./LoginForm";
+export type { LoginFormProps } from "./LoginForm";
