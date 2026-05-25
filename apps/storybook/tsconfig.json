@@ -1,0 +1,11 @@
+{
+  "extends": "@eni/config/tsconfig/react.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "paths": {
+      "@eni/ui": ["../../packages/ui/src/index.ts"],
+      "@eni/ui/*": ["../../packages/ui/src/*"]
+    }
+  },
+  "include": [".storybook", "src"]
+}
