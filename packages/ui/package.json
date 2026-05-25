@@ -1,6 +1,6 @@
 {
   "name": "@eni/ui",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "UI components (L4 components + L5 patterns) for eni-platform",
   "exports": {
     ".": "./src/index.ts",
