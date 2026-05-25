@@ -6,19 +6,29 @@
     ".": "./src/index.ts",
     "./components": "./src/components/index.ts",
     "./patterns": "./src/patterns/index.ts",
-    "./layouts": "./src/layouts/index.ts"
+    "./layouts": "./src/layouts/index.ts",
+    "./globals.css": "./src/globals.css"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
     "lint": "biome check ./src"
   },
   "dependencies": {
     "@eni/icons": "workspace:*",
-    "@eni/tokens": "workspace:*"
+    "@eni/tokens": "workspace:*",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
     "@eni/config": "workspace:*",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0",
     "typescript": "^5.7.2"
   },
   "peerDependencies": {

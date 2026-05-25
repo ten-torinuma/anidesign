@@ -1,2 +1,3 @@
 // L5 patterns — Phase 4 で実装
 // LoginForm, TenantSwitcher, PermissionEditor, DataTable, ...
+export {};
