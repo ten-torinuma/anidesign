@@ -12,9 +12,6 @@
     "typecheck": "tsc --noEmit",
     "lint": "biome check ./src"
   },
-  "dependencies": {
-    "@eni/schemas": "workspace:*"
-  },
   "devDependencies": {
     "@eni/config": "workspace:*",
     "@types/react": "^19.0.0",
@@ -23,7 +20,10 @@
     "typescript": "^5.7.2"
   },
   "peerDependencies": {
-    "firebase": "^11.0.0",
+    "firebase": ">=11.0.0",
     "react": "^19.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://asia-northeast1-npm.pkg.dev/eni-trance/enidesign/"
   }
 }

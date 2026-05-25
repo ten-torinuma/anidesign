@@ -25,3 +25,4 @@ packages/tokens/build/js/
 
 # test
 coverage/
+.npmrc

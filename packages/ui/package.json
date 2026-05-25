@@ -34,5 +34,8 @@
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://asia-northeast1-npm.pkg.dev/eni-trance/enidesign/"
   }
 }

@@ -15,6 +15,9 @@
   "dependencies": {
     "zod": "^3.24.1"
   },
+  "publishConfig": {
+    "registry": "https://asia-northeast1-npm.pkg.dev/eni-trance/enidesign/"
+  },
   "devDependencies": {
     "@eni/config": "workspace:*",
     "typescript": "^5.7.2"
