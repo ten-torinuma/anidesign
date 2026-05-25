@@ -1,0 +1,21 @@
+{
+  "name": "@eni/tokens",
+  "version": "0.0.0",
+  "description": "Design tokens — colors, spacing, typography, motion, radii",
+  "exports": {
+    ".": "./build/js/index.js",
+    "./css": "./build/css/tokens.css"
+  },
+  "types": "./build/js/index.d.ts",
+  "files": ["build"],
+  "scripts": {
+    "build": "style-dictionary build --config style-dictionary.config.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check ./src"
+  },
+  "devDependencies": {
+    "@eni/config": "workspace:*",
+    "style-dictionary": "^4.3.0",
+    "typescript": "^5.7.2"
+  }
+}

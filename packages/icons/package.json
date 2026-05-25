@@ -1,0 +1,25 @@
+{
+  "name": "@eni/icons",
+  "version": "0.0.0",
+  "description": "Icons for eni-platform — lucide-react re-exports + custom SVG icons",
+  "exports": {
+    ".": "./src/index.ts",
+    "./lucide": "./src/lucide/index.ts",
+    "./custom": "./src/custom/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check ./src"
+  },
+  "dependencies": {
+    "lucide-react": "^0.469.0"
+  },
+  "devDependencies": {
+    "@eni/config": "workspace:*",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}

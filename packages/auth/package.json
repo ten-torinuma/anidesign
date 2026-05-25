@@ -1,0 +1,26 @@
+{
+  "name": "@eni/auth",
+  "version": "0.0.0",
+  "description": "Authentication hooks and providers — EniTrance (anitrance) integration",
+  "exports": {
+    ".": "./src/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./providers": "./src/providers/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check ./src"
+  },
+  "dependencies": {
+    "@eni/schemas": "workspace:*"
+  },
+  "devDependencies": {
+    "@eni/config": "workspace:*",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "firebase": "^11.0.0",
+    "react": "^19.0.0"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "create-eni-app",
+  "version": "0.0.0",
+  "description": "CLI scaffold tool — pnpm create @eni/app <name>",
+  "bin": {
+    "create-eni-app": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check ./src"
+  },
+  "devDependencies": {
+    "@eni/config": "workspace:*",
+    "typescript": "^5.7.2"
+  }
+}

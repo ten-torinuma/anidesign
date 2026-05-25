@@ -1,0 +1,26 @@
+{
+  "name": "@eni/motion",
+  "version": "0.0.0",
+  "description": "Animation presets for eni-platform — framer-motion variants and transitions",
+  "exports": {
+    ".": "./src/index.ts",
+    "./variants": "./src/variants.ts",
+    "./transitions": "./src/transitions.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check ./src"
+  },
+  "dependencies": {
+    "@eni/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@eni/config": "workspace:*",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "framer-motion": "^11.0.0",
+    "react": "^19.0.0"
+  }
+}

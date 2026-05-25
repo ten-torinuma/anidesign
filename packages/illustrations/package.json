@@ -1,0 +1,22 @@
+{
+  "name": "@eni/illustrations",
+  "version": "0.0.0",
+  "description": "Illustration components — empty states and error screens",
+  "exports": {
+    ".": "./src/index.ts",
+    "./empty-states": "./src/empty-states/index.ts",
+    "./errors": "./src/errors/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check ./src"
+  },
+  "devDependencies": {
+    "@eni/config": "workspace:*",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}

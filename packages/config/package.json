@@ -1,0 +1,17 @@
+{
+  "name": "@eni/config",
+  "version": "0.0.0",
+  "description": "Shared TypeScript, Tailwind, and Biome configurations for eni-platform",
+  "exports": {
+    "./tsconfig/base.json": "./tsconfig/base.json",
+    "./tsconfig/react.json": "./tsconfig/react.json",
+    "./tsconfig/next.json": "./tsconfig/next.json",
+    "./tailwind/preset": "./tailwind/preset.ts",
+    "./biome/biome.json": "./biome/biome.json"
+  },
+  "files": ["tsconfig", "tailwind", "biome"],
+  "devDependencies": {
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Design System — AniService Frontend Platform</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body data-page="ds" data-logo="door" data-show-role-color="on" data-annotations="on" data-grid="off" data-density="regular">
+
+<!-- ────────────── Top bar ────────────── -->
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a href="index.html" class="logo" style="border:0;">
+      <span class="mark"><span></span></span>
+      <span class="logo-wm"><span>ani</span><span class="hy">·</span><span>service</span></span>
+    </a>
+    <span class="badge">Design System / Frontend Platform</span>
+    <nav class="pagetabs" style="margin-left:auto;">
+      <a href="index.html"          data-tab="overview">Overview</a>
+      <a href="eni-trance.html"     data-tab="entrance">EniTrance</a>
+      <a href="enidb.html"          data-tab="enidb">EniDB</a>
+      <a href="design-system.html"  data-tab="ds">Design System</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ────────────── HERO ────────────── -->
+<section class="hero">
+  <div class="shell">
+    <div class="hero-grid">
+      <div>
+        <span class="tag">AniService Frontend Platform Proposal / Technical R&amp;D</span>
+        <h1>
+          コンポーネント<span class="hy">ではなく</span><br/>
+          <b>プラットフォーム</b>を作る。
+        </h1>
+        <p class="lead">
+          AniService 配下の全プロダクト（EniTrance / EniDB / ServiceA / ServiceB / …）の
+          <b>フロントエンドを共通化</b>し、新サービス立ち上げ時の "ゼロから書く" を構造的に廃止します。
+          単なるコンポーネントライブラリではなく、<b>トークン → コンポーネント → パターン → アプリ</b> までを
+          一気通貫で設計した、長期再利用可能な基盤の提案です。
+        </p>
+        <div class="stack">
+          <span class="chip"><b>Monorepo</b> Turborepo + pnpm</span>
+          <span class="chip"><b>UI</b> shadcn/ui + Radix Primitives</span>
+          <span class="chip"><b>Tokens</b> Style Dictionary</span>
+          <span class="chip"><b>Docs</b> Storybook + Chromatic</span>
+        </div>
+      </div>
+
+      <div class="box-dashed" style="padding: 24px;">
+        <span class="box-label">fig.0 — Design System の規模感</span>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px;">
+          <div class="kpi-tile">
+            <div class="kpi-num">6</div>
+            <div class="kpi-lbl">Layers</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-num">12+</div>
+            <div class="kpi-lbl">Packages</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-num">4+</div>
+            <div class="kpi-lbl">Apps</div>
+          </div>
+        </div>
+
+        <div class="arrow v" style="height: 22px; margin-top: 14px;"><span class="lbl">scaffold</span></div>
+        <div class="node accent" style="text-align: center; align-items: center; padding: 12px;">
+          <div class="t">pnpm create @eni/app new-service</div>
+          <div class="sub">新サービス立ち上げ ~10分</div>
+        </div>
+
+        <div class="arrow v" style="height: 22px;"></div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="node" style="padding: 8px;"><div class="t" style="font-size: 11px;">@eni/ui</div></div>
+          <div class="node" style="padding: 8px;"><div class="t" style="font-size: 11px;">@eni/auth</div></div>
+          <div class="node" style="padding: 8px;"><div class="t" style="font-size: 11px;">@eni/tokens</div></div>
+          <div class="node" style="padding: 8px;"><div class="t" style="font-size: 11px;">@eni/api-client</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────── REFRAMING ────────────── -->
+<section id="frame">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">01 / reframing</div>
+      <h2>Component Library ではなく Design System Platform</h2>
+      <p class="section-lead">
+        個々のコンポーネントを並べただけでは "倉庫" にしかなりません。
+        AniService のフロントエンドを <b>長期再利用可能な基盤</b> にするため、
+        Design System を <b>6つの層</b> に分けて設計します。
+      </p>
+    </div>
+
+    <!-- 6-layer stack -->
+    <div class="box-dashed" style="padding: 28px;">
+      <span class="box-label">fig.1 — Design System の6層</span>
+
+      <div class="ds-stack">
+        <div class="ds-layer ds-l6">
+          <div class="ds-layer-num">L6</div>
+          <div class="ds-layer-title">Apps</div>
+          <div class="ds-layer-desc">EniTrance / EniDB / ServiceA / ServiceB の実プロダクト</div>
+        </div>
+        <div class="ds-layer ds-l5">
+          <div class="ds-layer-num">L5</div>
+          <div class="ds-layer-title">Patterns</div>
+          <div class="ds-layer-desc">LoginForm / TenantSwitcher / PermissionEditor / DataTable など、ドメイン固有の組み合わせ</div>
+        </div>
+        <div class="ds-layer ds-l4">
+          <div class="ds-layer-num">L4</div>
+          <div class="ds-layer-title">Components</div>
+          <div class="ds-layer-desc">Button / Input / Dialog / Select / Card — shadcn/ui 相当の汎用部品</div>
+        </div>
+        <div class="ds-layer ds-l3">
+          <div class="ds-layer-num">L3</div>
+          <div class="ds-layer-title">Primitives</div>
+          <div class="ds-layer-desc">Radix Primitives — 見た目ゼロの a11y 部品（自分では書かない）</div>
+        </div>
+        <div class="ds-layer ds-l2">
+          <div class="ds-layer-num">L2</div>
+          <div class="ds-layer-title">Tokens</div>
+          <div class="ds-layer-desc">Colors / Spacing / Typography / Motion / Radii — デザインの単一の真実</div>
+        </div>
+        <div class="ds-layer ds-l1">
+          <div class="ds-layer-num">L1</div>
+          <div class="ds-layer-title">Foundations</div>
+          <div class="ds-layer-desc">Tailwind CSS 4 / TypeScript strict / Biome / Turborepo</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="anno" style="margin-top: 18px; max-width: 760px;">
+      ※ <b style="color:var(--ink-12);">階層の意義</b>:
+      下層は変えにくく、上層は変わりやすい。<b>L2 Tokens を変えると全層に波及</b>、
+      L5 Patterns を変えても L4 以下は無傷。これが design system の本質です。
+    </p>
+  </div>
+</section>
+
+<!-- ────────────── REPO STRUCTURE ────────────── -->
+<section id="repo">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">02 / repository</div>
+      <h2>Monorepo — packages × apps</h2>
+      <p class="section-lead">
+        Turborepo + pnpm workspace で <b>1リポジトリにすべてを統合</b>。
+        packages/ が再利用資産、apps/ が消費者。変更は即座に全アプリに反映され、
+        npm publish のサイクルを待つ必要がありません。
+        <code>apps/storybook</code> と <code>apps/docs</code> は用途が異なるため分離し、
+        <code>@eni/config</code> は tsconfig / tailwind / biome をサブディレクトリで管理します。
+      </p>
+    </div>
+
+    <pre class="code">
+eni-platform/                          <span class="cm"># monorepo root</span>
+├─ biome.json                          <span class="cm"># root-level lint / format</span>
+├─ turbo.json
+├─ pnpm-workspace.yaml
+├─ README.md                           <span class="cm"># onboarding entry</span>
+├─ docs/adr/                           <span class="cm"># Architecture Decision Records</span>
+├─ .changeset/                         <span class="cm"># semver 管理</span>
+│
+├─ packages/                           <span class="cm"># ← 再利用可能な資産（=design system）</span>
+│  ├─ config/                          <span class="kw">@eni/config</span>
+│  │  ├─ tsconfig/
+│  │  │  ├─ base.json                  <span class="cm"># strict baseline</span>
+│  │  │  ├─ react.json                 <span class="cm"># + JSX</span>
+│  │  │  └─ next.json                  <span class="cm"># + Next.js</span>
+│  │  ├─ tailwind/
+│  │  │  └─ preset.ts                  <span class="cm"># design token 連携済み preset</span>
+│  │  └─ biome/
+│  │     └─ biome.json                 <span class="cm"># 共通 lint ルール</span>
+│  │
+│  ├─ tokens/                          <span class="kw">@eni/tokens</span>
+│  │  ├─ src/colors.ts                 <span class="cm"># OKLCH ベース · 12段階 · semantic</span>
+│  │  ├─ src/spacing.ts                <span class="cm"># 4px scale</span>
+│  │  ├─ src/typography.ts
+│  │  ├─ src/motion.ts                 <span class="cm"># easing / duration / spring</span>
+│  │  ├─ src/radii.ts
+│  │  └─ build/
+│  │     ├─ css/                       <span class="cm"># CSS Variables 出力</span>
+│  │     ├─ js/                        <span class="cm"># JS/TS 出力</span>
+│  │     └─ figma.json                 <span class="cm"># ← Figma Variables へ export</span>
+│  │
+│  ├─ ui/                              <span class="kw">@eni/ui</span>
+│  │  ├─ src/components/               <span class="cm"># L4: button, input, dialog, ...</span>
+│  │  ├─ src/patterns/                 <span class="cm"># L5: login-form, tenant-switcher, ...</span>
+│  │  └─ src/layouts/                  <span class="cm"># dashboard, auth, settings</span>
+│  │
+│  ├─ icons/                           <span class="kw">@eni/icons</span>          <span class="cm"># lucide + 自作</span>
+│  ├─ illustrations/                   <span class="kw">@eni/illustrations</span>  <span class="cm"># 空状態 · エラー画面</span>
+│  ├─ motion/                          <span class="kw">@eni/motion</span>         <span class="cm"># framer-motion preset</span>
+│  │
+│  ├─ auth/                            <span class="kw">@eni/auth</span>           <span class="cm"># EniTrance との接続</span>
+│  ├─ api-client/                      <span class="kw">@eni/api-client</span>     <span class="cm"># EniDB GraphQL codegen</span>
+│  ├─ schemas/                         <span class="kw">@eni/schemas</span>        <span class="cm"># Zod schemas</span>
+│  │
+│  └─ test-utils/                      <span class="kw">@eni/test-utils</span>
+│
+├─ apps/                               <span class="cm"># ← 消費者（publish しない）</span>
+│  ├─ storybook/                       <span class="cm"># コンポーネントカタログ · Chromatic 連携</span>
+│  └─ docs/                            <span class="cm"># ガイドライン · 使い方（Fumadocs）</span>
+│
+└─ tools/
+   ├─ create-app/                      <span class="cm"># pnpm create @eni/app の本体</span>
+   └─ token-sync/                      <span class="cm"># Figma ↔ tokens 同期</span></pre>
+
+    <p class="anno" style="margin-top: 18px; max-width: 760px;">
+      ※ <b style="color:var(--ink-12);">12+ packages</b> は多そうに見えますが、それぞれが独立した責務を持ち、
+      テスト・バージョン・所有チームを分けられます。これが "プラットフォーム" の本質。
+    </p>
+  </div>
+</section>
+
+<!-- ────────────── STACK ────────────── -->
+<section id="stack">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">03 / technology</div>
+      <h2>採用技術と判断理由</h2>
+      <p class="section-lead">
+        すべての選択肢には "なぜそれを選ぶのか" の理由があります。
+        コンペでの説明に耐える、業界標準とのアラインメントを明示します。
+      </p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width: 140px;">カテゴリ</th>
+            <th style="width: 200px;">採用</th>
+            <th>判断理由（外で説明できるレベル）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Monorepo</td><td><b>Turborepo + pnpm workspace</b></td><td>Vercel製・業界標準・リモートキャッシュで CI 高速化・移行先選択肢が広い</td></tr>
+          <tr><td>UI Primitives</td><td><b>Radix Primitives</b></td><td>a11y 完璧 · Headless · React 19 対応 · shadcn/ui のベース</td></tr>
+          <tr><td>UI Components</td><td><b>shadcn/ui ベース</b></td><td>コピー型でカスタマイズ自由 · Tailwind ネイティブ · 業界の勢いが急上昇</td></tr>
+          <tr><td>Styling</td><td><b>Tailwind CSS 4</b></td><td>CSS変数ベース · トークンと一体化 · zero-runtime · ビルド爆速</td></tr>
+          <tr><td>Design Tokens</td><td><b>Style Dictionary</b></td><td>1ソースから TS / CSS / Figma / iOS / Android に展開可能</td></tr>
+          <tr><td>Type</td><td><b>TypeScript 5 strict</b></td><td>project references で巨大コードベース対応 · 型情報を SDK に流せる</td></tr>
+          <tr><td>Validation</td><td><b>Zod</b></td><td>runtime + type を1スキーマから · React Hook Form と相性最強</td></tr>
+          <tr><td>Form</td><td><b>React Hook Form + Zod</b></td><td>パフォーマンス · 業界標準 · resolver 経由で Zod シームレス</td></tr>
+          <tr><td>State</td><td><b>TanStack Query + Zustand</b></td><td>server state と client state を分離 · React 19 対応</td></tr>
+          <tr><td>Routing</td><td><b>Next.js 16 App Router</b></td><td>既に採用済み · RSC で初期 payload 最小化</td></tr>
+          <tr><td>API Client</td><td><b>GraphQL Codegen</b></td><td>EniDB スキーマから自動生成 · フロント/バック型ズレを構造的に防ぐ</td></tr>
+          <tr><td>Auth</td><td><b>firebase-js-sdk + @eni/auth</b></td><td>EniTrance との接続 · 全アプリ共通の useAuth() フック</td></tr>
+          <tr><td>Storybook</td><td><b>Storybook 8 + Chromatic</b></td><td>PR毎のビジュアル回帰 · デザイナーとの contract</td></tr>
+          <tr><td>Test</td><td><b>Vitest + Playwright + axe-core</b></td><td>unit + e2e + a11y · CI で完全自動化</td></tr>
+          <tr><td>Lint</td><td><b>Biome</b></td><td>ESLint+Prettier より圧倒的に速い · 単一ツール · 業界の本命</td></tr>
+          <tr><td>Versioning</td><td><b>Changesets</b></td><td>monorepo の semver 管理の標準 · 自動 changelog</td></tr>
+          <tr><td>CI</td><td><b>GitHub Actions + Turbo Remote Cache</b></td><td>差分ビルド · キャッシュで PR 1分以内</td></tr>
+          <tr><td>Docs</td><td><b>Storybook + Fumadocs</b></td><td>コンポーネント仕様 + ガイドラインの両立</td></tr>
+          <tr><td>i18n</td><td><b>next-intl</b></td><td>RSC 対応 · 顧客の多言語要望に即応</td></tr>
+          <tr><td>Telemetry</td><td><b>OpenTelemetry + Vercel Analytics</b></td><td>観測性まで設計 · Real User Monitoring</td></tr>
+          <tr><td>Feature flags</td><td><b>OpenFeature 互換</b></td><td>段階リリース · A/B テストの基盤</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────── DIFFERENTIATORS ────────────── -->
+<section id="differentiators">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">04 / differentiators</div>
+      <h2>差別化ポイント — 他案では出てこない10項目</h2>
+      <p class="section-lead">
+        "コンポーネントを集めました" で止まらない、<b>プラットフォーム視点</b> でしか出てこない設計判断。
+        これがコンペで効きます。
+      </p>
+    </div>
+
+    <div class="diff-grid">
+
+      <div class="diff-card">
+        <div class="diff-num">01</div>
+        <h3>Single Source of Truth な Token 設計</h3>
+        <p><code>@eni/tokens</code> がすべての色・サイズ・タイポの<b>唯一の真実</b>。
+        Style Dictionary で Figma Variables にも export。
+        デザイナーが Figma で色を変えるとコードに流れる仕組み。</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">02</div>
+        <h3>多テーマ・ホワイトラベル対応</h3>
+        <p>CSS変数で配信するので <code>&lt;html data-tenant="customer-x"&gt;</code> で
+        色が切り替わる。将来 ServiceA を顧客ブランドで出すホワイトラベル提供にも対応可能。</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">03</div>
+        <h3>GraphQL Codegen で EniDB と型同期</h3>
+        <p>EniDB のスキーマから TypeScript の型と React hooks を自動生成。
+        <code>useDealsQuery()</code> を型安全に呼べる。
+        フロント/バックの型ズレ事故を構造的に防止。</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">04</div>
+        <h3>CLI で新サービス scaffold</h3>
+        <p><code>pnpm create @eni/app service-c</code> で
+        auth + ui + tokens 全部セットアップ済みの新規アプリが10分で生まれる。
+        "再利用可能" を実演する強い証拠。</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">05</div>
+        <h3>ビジュアル回帰テスト</h3>
+        <p>Chromatic で全コンポーネントのスクリーンショットを CI で比較。
+        PR 毎に "見た目が変わった箇所" がレビュアーに見える。
+        デザインシステム運用のプロ感。</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">06</div>
+        <h3>アクセシビリティ CI</h3>
+        <p>axe-core を Storybook と Playwright 両方に組み込み、
+        WCAG AA 違反を PR でブロック。
+        法務リスク・公共調達対応も視野に入っていることを示せる。</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">07</div>
+        <h3>Performance Budget</h3>
+        <p>bundle size の上限を CI で監視、LCP / INP を Vercel Analytics で計測。
+        "美しさだけじゃなく速度も" 設計済み。</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">08</div>
+        <h3>ドキュメント自動生成</h3>
+        <p>Storybook + MDX でコンポーネント props は TSDoc から自動抽出、
+        使用例は CodeSandbox 埋め込み。
+        "コードと文書がズレる" 問題を構造的に解消。</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">09</div>
+        <h3>段階的移行ストーリー</h3>
+        <p>Radix Themes の既存コードから新システムへの段階的移行プラン。
+        どのスプリントで何を置き換えるか明示。
+        机上の空論ではない証拠。</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-num">10</div>
+        <h3>ADR と onboarding 設計</h3>
+        <p>Architecture Decision Records を <code>docs/adr/</code> に蓄積、
+        README が新規メンバーの onboarding entry。
+        個人プロジェクトではなく組織アセットとして運用。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────── ROADMAP ────────────── -->
+<section id="roadmap">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">06 / roadmap</div>
+      <h2>実装ロードマップ — 16週で骨格、その後段階移行</h2>
+      <p class="section-lead">
+        提案採用後の具体的なスプリント計画。
+        Phase 1〜4 で基盤完成、Phase 5 以降で既存サービスを移行します。
+      </p>
+    </div>
+
+    <div class="box-dashed" style="padding: 28px;">
+      <span class="box-label">fig.2 — フェーズ進捗</span>
+
+      <div class="phase-track" style="grid-template-columns: repeat(5, 1fr);">
+        <div class="phase-card">
+          <div class="phase-marker">①</div>
+          <div class="phase-meta">phase 1 — week 1-4</div>
+          <h3>基盤</h3>
+          <ul class="phase-list">
+            <li>Turborepo + pnpm workspace</li>
+            <li>@eni/config (tsconfig/tailwind/biome)</li>
+            <li>@eni/tokens (Style Dictionary)</li>
+            <li>apps/storybook 立ち上げ</li>
+            <li>Biome + CI 設定</li>
+          </ul>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-marker">②</div>
+          <div class="phase-meta">phase 2 — week 5-8</div>
+          <h3>UI コア</h3>
+          <ul class="phase-list">
+            <li>@eni/ui: 20コンポーネント</li>
+            <li>@eni/icons</li>
+            <li>axe-core CI 連携</li>
+            <li>Chromatic 連携</li>
+            <li>Storybook docs</li>
+          </ul>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-marker">③</div>
+          <div class="phase-meta">phase 3 — week 9-12</div>
+          <h3>連携層</h3>
+          <ul class="phase-list">
+            <li>@eni/auth (EniTrance 接続)</li>
+            <li>@eni/api-client (codegen)</li>
+            <li>@eni/schemas (Zod)</li>
+            <li>react-hook-form 統合</li>
+          </ul>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-marker">④</div>
+          <div class="phase-meta">phase 4 — week 13-16</div>
+          <h3>パターン + CLI</h3>
+          <ul class="phase-list">
+            <li>@eni/ui patterns</li>
+            <li>create-eni-app CLI</li>
+            <li>apps/docs (Fumadocs) 公開</li>
+            <li>Changesets 運用開始</li>
+          </ul>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-marker">⑤</div>
+          <div class="phase-meta">phase 5+ — week 17-</div>
+          <h3>導入拡大</h3>
+          <ul class="phase-list">
+            <li>anitrance / anidb が @eni/ui を導入</li>
+            <li>運用フィードバック反映</li>
+            <li>token-sync (Figma 連携) 稼働</li>
+            <li>新サービスは独立リポで @eni/ui を利用</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────── MIGRATION ────────────── -->
+<section id="migration">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">07 / migration</div>
+      <h2>既存リポへの導入 — 急がず壊さず</h2>
+      <p class="section-lead">
+        anitrance / anidb は独立リポとして存続し、<code>@eni/ui</code> を
+        <code>pnpm install</code> して使う形になります。
+        既存の <code>@radix-ui/themes</code> ベースのコードを捨てる必要はなく、
+        新規 PR から段階的に置き換える戦略です。
+      </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+
+      <div class="card">
+        <div class="step-num">step 1</div>
+        <h3 style="margin-bottom: 6px;">共存期間</h3>
+        <p class="anno" style="color:var(--ink-11);">
+          <code>@radix-ui/themes</code> と <code>@eni/ui</code> を同じアプリ内で共存。
+          新規画面は <code>@eni/ui</code>、既存画面はそのまま。
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="step-num">step 2</div>
+        <h3 style="margin-bottom: 6px;">境界の置き換え</h3>
+        <p class="anno" style="color:var(--ink-11);">
+          高頻度修正される画面から <code>@eni/ui</code> へ書き換え。
+          1 PR = 1画面のスコープで安全に進める。
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="step-num">step 3</div>
+        <h3 style="margin-bottom: 6px;">完全置換</h3>
+        <p class="anno" style="color:var(--ink-11);">
+          全画面の移行完了後、<code>@radix-ui/themes</code> を package.json から外す。
+          bundle size 削減効果も得られる。
+        </p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 28px;">
+      <div class="callout-tag">並行運用が成立する理由</div>
+      <p>
+        <code>@radix-ui/themes</code> の <code>&lt;Theme&gt;</code> プロバイダーは、
+        その内側の Themes コンポーネントだけに影響します。<code>@eni/ui</code> は
+        Radix <b>Primitives</b> + Tailwind なので、Themes の CSS と干渉しません。
+        段階移行が技術的に成立する設計です。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────── ROI ────────────── -->
+<section id="roi">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">08 / roi</div>
+      <h2>投資対効果 — なぜいま作るか</h2>
+      <p class="section-lead">
+        Design System への投資は、サービス数が増えるほど指数関数的に効きます。
+        AniService が4サービス目を立ち上げるタイミングが分岐点。
+      </p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>従来の進め方</th>
+            <th><b>Design System Platform</b></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>新サービス立ち上げ時間</td>
+            <td>2-4週（ログイン / ベース UI / レイアウトを毎回作る）</td>
+            <td><b>1-2日</b>（<code>create @eni/app</code> + 業務ロジックのみ）</td>
+          </tr>
+          <tr>
+            <td>ブランド変更コスト</td>
+            <td>全サービスで個別修正</td>
+            <td><b>tokens 1ファイル</b>変更で全サービスに波及</td>
+          </tr>
+          <tr>
+            <td>a11y 改善コスト</td>
+            <td>サービス毎にレビュー・修正</td>
+            <td><b>共通コンポーネント1箇所</b>修正で全サービス改善</td>
+          </tr>
+          <tr>
+            <td>新メンバー onboarding</td>
+            <td>サービス毎にコードベース把握</td>
+            <td><b>1リポジトリ</b>を理解すれば全サービスに参画可</td>
+          </tr>
+          <tr>
+            <td>セキュリティパッチ</td>
+            <td>各サービスで個別対応</td>
+            <td><b>共通パッケージ更新</b>で全サービスに反映</td>
+          </tr>
+          <tr>
+            <td>デザイナー連携</td>
+            <td>Figma と実装が乖離</td>
+            <td><b>tokens の自動同期</b>で常に一致</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="anno" style="margin-top: 18px; max-width: 760px;">
+      ※ 初期投資は <b>16週 × 1人</b> 程度（既存サービスの移行は別カウント）。
+      ServiceA / B 立ち上げ時に投資回収。3つ目のサービスから純粋な利益になります。
+    </p>
+  </div>
+</section>
+
+<!-- ────────────── DISTRIBUTION ────────────── -->
+<section id="distribution">
+  <div class="shell">
+    <div class="section-head">
+      <div class="section-eyebrow">08 / private distribution</div>
+      <h2>プライベート配布 — GCP IAM で守る</h2>
+      <p class="section-lead">
+        Design System は <b>社内専用</b>。<b>GCP Artifact Registry</b> に publish し、
+        IAM 権限を持つ社員だけが <code>pnpm install @eni/ui</code> で利用できます。
+        EniTrance / EniDB と <b>同じセキュリティ境界</b> で運用できるのが最大の利点。
+      </p>
+    </div>
+
+    <div class="box-dashed" style="padding: 28px;">
+      <span class="box-label">fig.3 — 配布と認可のフロー</span>
+
+      <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 12px; align-items: center;">
+
+        <div class="node accent" style="text-align: center; align-items: center;">
+          <div class="t">@eni/ui</div>
+          <div class="sub">pnpm publish</div>
+        </div>
+
+        <div class="anno" style="font-family: var(--font-mono); font-size: 11px; color: var(--ink-10); text-align: center; padding: 0 4px;">
+          ① publish
+        </div>
+
+        <div class="node" style="text-align: center; align-items: center;">
+          <div class="t">GCP Artifact Registry</div>
+          <div class="sub">eni-platform/eni-npm</div>
+        </div>
+
+        <div class="anno" style="font-family: var(--font-mono); font-size: 11px; color: var(--ink-10); text-align: center; padding: 0 4px;">
+          ② pnpm install
+        </div>
+
+        <div class="node" style="text-align: center; align-items: center;">
+          <div class="t">社員のPC / CI</div>
+          <div class="sub">gcloud auth で認証</div>
+        </div>
+      </div>
+
+      <p class="anno" style="margin-top: 22px;">
+        ※ <b style="color:var(--ink-12);">権限がない人が叩くと</b> <code>npm error 403 Forbidden</code> で install 自体が失敗。
+        退職者の <code>artifactregistry.reader</code> を IAM から剥がせば、その時点で install 不可になります。
+      </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px;">
+
+      <div>
+        <h3 style="margin-bottom: 10px;">配布側 — Artifact Registry を1回作る</h3>
+        <pre class="code">
+<span class="cm"># レジストリ作成（初回のみ）</span>
+gcloud artifacts repositories create eni-npm \
+  --repository-format=npm \
+  --location=asia-northeast1 \
+  --project=eni-platform
+
+<span class="cm"># 設計者チームに writer 権限</span>
+gcloud artifacts repositories add-iam-policy-binding eni-npm \
+  --location=asia-northeast1 \
+  --member=group:<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="95f0fbfcb8e1f0f6fdb8f1f0e3d5f0edf4f8e5f9f0bbf6faf8">[email&#160;protected]</a> \
+  --role=roles/artifactregistry.writer
+
+<span class="cm"># 全社員に reader 権限</span>
+gcloud artifacts repositories add-iam-policy-binding eni-npm \
+  --location=asia-northeast1 \
+  --member=group:<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7d6dbdb9ac4c3d6d1d1f7d2cfd6dac7dbd299d4d8da">[email&#160;protected]</a> \
+  --role=roles/artifactregistry.reader</pre>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom: 10px;">利用側 — プロジェクト .npmrc 1ファイルだけ</h3>
+        <pre class="code">
+<span class="cm"># .npmrc</span>
+@eni:registry=https://asia-northeast1-npm.pkg.dev/eni-platform/eni-npm/
+
+<span class="cm"># 社員は1回だけ：</span>
+gcloud auth login
+gcloud auth application-default login
+
+<span class="cm"># あとは普通に：</span>
+pnpm install @eni/ui
+
+<span class="cm"># これでもう使える</span>
+<span class="kw">import</span> { Button } <span class="kw">from</span> <span class="st">"@eni/ui"</span>;</pre>
+      </div>
+    </div>
+
+    <!-- IAM matrix -->
+    <div style="margin-top: 32px;">
+      <h3 style="margin-bottom: 12px;">IAM 権限マトリクス</h3>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 240px;">ロール</th>
+              <th style="width: 200px;">付与対象</th>
+              <th>できること</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>artifactregistry.reader</code></td>
+              <td>全社員グループ</td>
+              <td><code>pnpm install</code> ができる</td>
+            </tr>
+            <tr>
+              <td><code>artifactregistry.writer</code></td>
+              <td>技術開発部 チームグループ</td>
+              <td>新しいバージョンを <code>publish</code> できる</td>
+            </tr>
+            <tr>
+              <td><code>artifactregistry.admin</code></td>
+              <td>リード / あなた</td>
+              <td>IAM 自体の変更・レジストリ設定</td>
+            </tr>
+            <tr style="background: var(--panel-2);">
+              <td>権限なし（外部・退職者）</td>
+              <td>—</td>
+              <td><b style="color: oklch(0.50 0.17 25);">install 自体が 403 で失敗</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Why GCP wins -->
+    <div class="callout" style="margin-top: 32px;">
+      <div class="callout-tag">なぜ GitHub Packages ではなく Artifact Registry か</div>
+      <ul style="margin: 4px 0 0 18px; padding: 0; color: var(--ink-11); line-height: 1.9;">
+        <li><b style="color:var(--ink-12);">既存の GCP IAM に乗る</b> — EniTrance/EniDB と同じ権限管理。退職時の権限剥奪が1箇所で完結</li>
+        <li><b style="color:var(--ink-12);">Cloud Run からの認証が自動</b> — service-account をそのまま使える（PAT発行不要）</li>
+        <li><b style="color:var(--ink-12);">Cloud Audit Logs に集約</b> — 「誰がいつ install したか」が既存のログ基盤に流れる</li>
+        <li><b style="color:var(--ink-12);">VPC Service Controls 対応</b> — perimeter の中に閉じ込められる（GitHub Packages は外部）</li>
+        <li><b style="color:var(--ink-12);">コストが小さい</b> — Org メンバー数で課金されない（パッケージ容量とリクエスト数のみ）</li>
+      </ul>
+    </div>
+
+    <!-- License notes -->
+    <div style="margin-top: 32px;">
+      <h3 style="margin-bottom: 12px;">含まれる素材のライセンス管理</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="card">
+          <h3 style="margin-bottom: 6px; font-size: 14px;">✅ 再配布OK（社内パッケージに同梱可）</h3>
+          <p class="anno" style="color:var(--ink-11);">
+            Lucide React (MIT) · Heroicons (MIT) · Tabler Icons (MIT) ·
+            Material Symbols (Apache 2.0) など MIT/Apache 系の OSS。<br/>
+            <b style="color:var(--ink-12);">README に元ライブラリの LICENSE を同梱</b> するだけで利用可。
+          </p>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom: 6px; font-size: 14px;">❌ 含めない</h3>
+          <p class="anno" style="color:var(--ink-11);">
+            商標ロゴ（Google / Slack / GitHub 等の brand mark）・<br/>
+            FontAwesome Pro・有料 icon ライブラリ・<br/>
+            個別ライセンスのフォントなど。<br/>
+            <b style="color:var(--ink-12);">これらが必要な画面は各サービス側で個別管理</b>。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p class="anno" style="margin-top: 22px; max-width: 760px;">
+      ※ <code>package.json</code> に <code>"private": true</code> を入れて、誤って public npm に publish される事故も防ぎます。
+      技術的に内部利用を強制する設計です。
+    </p>
+  </div>
+</section>
+
+<!-- ────────────── CLOSING ────────────── -->
+<section>
+  <div class="shell">
+    <div class="callout" style="background: var(--ink-12); color: var(--bg); border-color: var(--ink-12);">
+      <div class="callout-tag" style="color: var(--accent-6);">提案サマリ</div>
+      <p style="color: var(--bg); font-size: 15px; line-height: 1.7;">
+        AniService の Frontend を、<b style="color: var(--accent-6);">単発のコンポーネント集ではなく、長期再利用可能なプラットフォーム</b>として設計します。
+        Token / Component / Pattern / App の6層、12+ packages の monorepo、自動同期されるデザイントークン、
+        GraphQL codegen、ビジュアル回帰、a11y CI、CLI scaffold — すべて業界標準とアラインメント済み。
+        <b style="color: var(--accent-6);">3サービス目を超えた瞬間に純粋な利益</b>を生み、
+        将来のホワイトラベル提供にも構造的に対応できる基盤です。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────── FOOTER ────────────── -->
+<footer>
+  <div class="shell" style="display:flex; justify-content:space-between; flex-wrap: wrap; gap: 16px;">
+    <div>Design System Platform — AniService frontend proposal</div>
+    <div>← <a href="enidb.html">EniDB</a> · <a href="index.html">Overview</a></div>
+  </div>
+</footer>
+
+</main>
+
+<div id="tweaks-root"></div>
+
+<style>
+  /* KPI tiles */
+  .kpi-tile {
+    background: var(--panel-2);
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    padding: 12px 8px;
+    text-align: center;
+  }
+  .kpi-num {
+    font-family: var(--font-sans);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--accent-11);
+    letter-spacing: -0.02em;
+  }
+  .kpi-lbl {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-10);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* Design System layer stack */
+  .ds-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ds-layer {
+    display: grid;
+    grid-template-columns: 60px 200px 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    background: var(--panel);
+    border: 1px solid var(--line);
+  }
+  .ds-layer-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-10);
+    letter-spacing: 0.08em;
+    padding: 3px 6px;
+    background: var(--panel-2);
+    border-radius: 4px;
+    text-align: center;
+    width: fit-content;
+  }
+  .ds-layer-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink-12);
+    letter-spacing: -0.015em;
+  }
+  .ds-layer-desc {
+    font-size: 13px;
+    color: var(--ink-11);
+    line-height: 1.5;
+  }
+  .ds-l1 { background: oklch(0.99 0.004 250); border-color: var(--line-2); }
+  .ds-l2 { background: oklch(0.96 0.008 250); }
+  .ds-l3 { background: oklch(0.93 0.012 250); }
+  .ds-l4 { background: var(--accent-1); border-color: var(--accent-6); }
+  .ds-l4 .ds-layer-num { background: color-mix(in oklab, var(--accent-9) 20%, transparent); color: var(--accent-11); }
+  .ds-l5 { background: oklch(0.93 0.018 280); border-color: oklch(0.84 0.04 280); }
+  .ds-l5 .ds-layer-num { color: var(--accent-11); }
+  .ds-l6 {
+    background: var(--ink-12);
+    border-color: var(--ink-12);
+  }
+  .ds-l6 .ds-layer-title { color: var(--bg); }
+  .ds-l6 .ds-layer-desc { color: var(--ink-7); }
+  .ds-l6 .ds-layer-num {
+    background: oklch(0.30 0.012 250);
+    color: var(--bg);
+  }
+
+  /* Differentiator card grid */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .diff-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+    position: relative;
+  }
+  .diff-card h3 {
+    font-size: 15px;
+    margin-bottom: 6px;
+    margin-right: 36px;
+  }
+  .diff-card p {
+    color: var(--ink-11);
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+  .diff-card code {
+    background: var(--panel-2);
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .diff-num {
+    position: absolute;
+    top: 14px; right: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-11);
+    background: var(--accent-1);
+    border: 1px solid var(--accent-6);
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  .step-num {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--accent-11);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+</style>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#5b5bd6"/>
+    <rect x="20" y="32" width="60" height="6" fill="white" rx="1" opacity="0.9"/>
+    <rect x="20" y="44" width="60" height="6" fill="white" rx="1" opacity="0.7"/>
+    <rect x="20" y="56" width="60" height="6" fill="white" rx="1" opacity="0.5"/>
+    <rect x="20" y="68" width="60" height="6" fill="white" rx="1" opacity="0.3"/>
+    <text x="50" y="90" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="white" font-weight="600">Design System</text>
+  </svg>
+</template>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks-app.jsx"></script>
+
+</body>
+</html>

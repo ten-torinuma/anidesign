@@ -1,0 +1,32 @@
+{
+  "name": "@eni/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Storybook — component catalog and visual regression (Chromatic)",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "lint": "biome check ."
+  },
+  "dependencies": {
+    "@eni/icons": "workspace:*",
+    "@eni/illustrations": "workspace:*",
+    "@eni/motion": "workspace:*",
+    "@eni/tokens": "workspace:*",
+    "@eni/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@eni/config": "workspace:*",
+    "@chromatic-com/storybook": "^3.2.3",
+    "@storybook/addon-a11y": "^8.4.7",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/react-vite": "^8.4.7",
+    "storybook": "^8.4.7",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

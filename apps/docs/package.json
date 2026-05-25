@@ -1,0 +1,26 @@
+{
+  "name": "@eni/docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Design system documentation site — guidelines and usage (Fumadocs)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome check .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@eni/tokens": "workspace:*",
+    "@eni/ui": "workspace:*",
+    "fumadocs-core": "^14.6.4",
+    "fumadocs-ui": "^14.6.4",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eni/config": "workspace:*",
+    "typescript": "^5.7.2"
+  }
+}

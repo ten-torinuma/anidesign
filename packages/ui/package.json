@@ -1,0 +1,28 @@
+{
+  "name": "@eni/ui",
+  "version": "0.0.0",
+  "description": "UI components (L4 components + L5 patterns) for eni-platform",
+  "exports": {
+    ".": "./src/index.ts",
+    "./components": "./src/components/index.ts",
+    "./patterns": "./src/patterns/index.ts",
+    "./layouts": "./src/layouts/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check ./src"
+  },
+  "dependencies": {
+    "@eni/icons": "workspace:*",
+    "@eni/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@eni/config": "workspace:*",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
