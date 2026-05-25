@@ -3,15 +3,22 @@
   "version": "0.0.0",
   "description": "CLI scaffold tool — pnpm create @eni/app <name>",
   "bin": {
-    "create-eni-app": "./src/index.ts"
+    "create-eni-app": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts",
     "typecheck": "tsc --noEmit",
     "lint": "biome check ./src"
   },
+  "dependencies": {
+    "@clack/prompts": "^0.9.1",
+    "picocolors": "^1.1.1"
+  },
   "devDependencies": {
     "@eni/config": "workspace:*",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
 }
