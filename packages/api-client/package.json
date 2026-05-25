@@ -1,10 +1,11 @@
 {
   "name": "@eni/api-client",
   "version": "0.0.0",
-  "description": "GraphQL client for EniDB — auto-generated hooks and types via codegen",
+  "description": "GraphQL client for EniDB — Apollo Client with auth + auto-generated hooks via codegen",
   "exports": {
     ".": "./src/index.ts",
-    "./generated": "./src/generated/index.ts"
+    "./generated": "./src/generated/index.ts",
+    "./providers": "./src/providers/index.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -16,11 +17,18 @@
     "@eni/schemas": "workspace:*"
   },
   "devDependencies": {
+    "@apollo/client": "^3.12.0",
     "@eni/config": "workspace:*",
     "@graphql-codegen/cli": "^5.0.3",
+    "@graphql-codegen/client-preset": "^4.5.1",
+    "@types/react": "^19.0.0",
+    "graphql": "^16.10.0",
+    "react": "^19.0.0",
     "typescript": "^5.7.2"
   },
   "peerDependencies": {
+    "@apollo/client": "^3.12.0",
+    "graphql": "^16.10.0",
     "react": "^19.0.0"
   }
 }
