@@ -1,0 +1,59 @@
+/* @eni/ui — グローバルCSS
+ * 消費アプリで以下のように import してください:
+ *   @import "@eni/ui/globals.css";
+ */
+
+/* @eni/tokens の CSS Variables を読み込む */
+@import "@eni/tokens/css";
+
+/* Tailwind CSS 4 テーマ定義
+ * @eni/tokens の --eni-* 変数を Tailwind のユーティリティクラスにマッピング */
+@theme {
+  /* --- 基本色 --- */
+  --color-background:          var(--eni-color-neutral-1);
+  --color-foreground:          var(--eni-color-neutral-12);
+
+  /* --- Primary（縁色） --- */
+  --color-primary:             var(--eni-color-primary-9);
+  --color-primary-foreground:  var(--eni-color-neutral-1);
+
+  /* --- Secondary --- */
+  --color-secondary:           var(--eni-color-neutral-3);
+  --color-secondary-foreground: var(--eni-color-neutral-12);
+
+  /* --- Muted --- */
+  --color-muted:               var(--eni-color-neutral-3);
+  --color-muted-foreground:    var(--eni-color-neutral-11);
+
+  /* --- Accent --- */
+  --color-accent:              var(--eni-color-primary-3);
+  --color-accent-foreground:   var(--eni-color-primary-12);
+
+  /* --- Destructive --- */
+  --color-destructive:         var(--eni-color-error-9);
+  --color-destructive-foreground: var(--eni-color-neutral-1);
+
+  /* --- Card --- */
+  --color-card:                var(--eni-color-neutral-1);
+  --color-card-foreground:     var(--eni-color-neutral-12);
+
+  /* --- Popover --- */
+  --color-popover:             var(--eni-color-neutral-1);
+  --color-popover-foreground:  var(--eni-color-neutral-12);
+
+  /* --- Border / Input / Ring --- */
+  --color-border:              var(--eni-color-neutral-6);
+  --color-input:               var(--eni-color-neutral-6);
+  --color-ring:                var(--eni-color-primary-8);
+
+  /* --- Radius --- */
+  --radius-sm:  var(--eni-radius-sm);
+  --radius-md:  var(--eni-radius-md);
+  --radius-lg:  var(--eni-radius-lg);
+  --radius-xl:  var(--eni-radius-xl);
+  --radius:     var(--eni-radius-md);
+
+  /* --- Font --- */
+  --font-sans:  var(--eni-font-family-sans);
+  --font-mono:  var(--eni-font-family-mono);
+}
