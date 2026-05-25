@@ -1,5 +1,5 @@
-export * from "./colors";
-export * from "./motion";
-export * from "./radii";
-export * from "./spacing";
-export * from "./typography";
+export { colorTokens } from "./colors.ts";
+export { motionTokens } from "./motion.ts";
+export { radiiTokens } from "./radii.ts";
+export { spacingTokens } from "./spacing.ts";
+export { typographyTokens } from "./typography.ts";
