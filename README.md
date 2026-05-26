@@ -11,7 +11,7 @@ pnpm install
 # 開発サーバー（全アプリ）
 pnpm dev
 
-# Storybook
+# Storybook（ルートから起動、http://localhost:6006）
 pnpm storybook
 
 # ビルド

@@ -57,8 +57,8 @@
   --color-success-text:       var(--eni-color-success-11);
 
   /* --- Border / Input / Ring --- */
-  --color-border:              var(--eni-color-neutral-6);
-  --color-input:               var(--eni-color-neutral-6);
+  --color-border:              var(--eni-color-primary-4);
+  --color-input:               var(--eni-color-primary-4);
   --color-ring:                var(--eni-color-primary-8);
 
   /* --- Radius --- */
@@ -71,4 +71,9 @@
   /* --- Font --- */
   --font-sans:  var(--eni-font-family-sans);
   --font-mono:  var(--eni-font-family-mono);
+}
+
+[data-theme="dark"] {
+  --color-border: var(--eni-color-primary-11);
+  --color-input:  var(--eni-color-primary-11);
 }
